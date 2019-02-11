@@ -66,7 +66,7 @@ assert(testG.supplyCount[duchy] == G.supplyCount[duchy]);
 assert(testG.supplyCount[province] == G.supplyCount[province]);
 assert(testG.supplyCount[estate] == G.supplyCount[estate]);
 
-printf("----------------------END OF CARD TEST 1-----------------------\n\n");
+printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
 
 return 0;
 }

@@ -26,6 +26,7 @@ int main() {
     int seed = 1000;
     int numPlayers = 2;
     int thisPlayer = 0;
+    int otherPlayer = 1;
 	struct gameState G, testG;
 	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
 			sea_hag, tribute, smithy, council_room};
@@ -33,10 +34,10 @@ int main() {
 	// initialize a game state and player cards
 	initializeGame(numPlayers, k, seed, &G);
 
-	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+	printf("----------------- Card Test 4: %s ----------------\n", TESTCARD);
 
 	// ----------- TEST 1: choice1 = 1 = +2 cards --------------
-	printf("TEST 1: choice1 = 1 = +2 cards\n");
+	printf("-----------------TEST 1: choice1 = 1 = +2 cards-----------------\n");
 
 	// copy the game state to a test case
 	memcpy(&testG, &G, sizeof(struct gameState));
@@ -53,7 +54,7 @@ int main() {
 	assert(testG.coins == G.coins + xtraCoins);
 
 	// ----------- TEST 2: choice1 = 2 = +2 coins --------------
-	printf("TEST 2: choice1 = 2 = +2 coins\n");
+	printf("-----------------TEST 2: choice1 = 2 = +2 coins-----------------\n");
 
 	// copy the game state to a test case
 	memcpy(&testG, &G, sizeof(struct gameState));
@@ -71,7 +72,7 @@ int main() {
 
 	// ----------- TEST 3: choice1 = 3 = trash two cards --------------
 
-	printf("TEST 3: choice1 = 3 = trash two cards\n");
+	printf("-----------------TEST 3: choice1 = 3 = trash two cards-----------------\n");
 	choice1 = 3;
 
 	// cycle through each eligible combination of 2 cards to trash
@@ -127,8 +128,19 @@ int main() {
 			assert(testG.handCount[thisPlayer] == G.handCount[thisPlayer] + newCards - discarded);
 			assert(testG.deckCount[thisPlayer] == G.deckCount[thisPlayer] - newCards + shuffledCards);
 		}
-
 	}
+  
+  printf("----------------- TEST 4: Check for expected Kingdom cards----------------- \n");
+  printf("kingdom card: %d, expected: %d\n", testG.supplyCount[thisPlayer], G.supplyCount[thisPlayer]);
+  assert(testG.supplyCount[thisPlayer] == G.supplyCount[thisPlayer]);
+  printf("----------------- TEST 5: Check for expected Victory cards----------------- \n");
+  printf("Duchy: %d, Expected: %d\n", testG.supplyCount[duchy], G.supplyCount[duchy]);
+  printf("Province: %d, Expected: %d\n", testG.supplyCount[province], G.supplyCount[province]);
+  printf("Estate: %d, Expected: %d\n", testG.supplyCount[estate], G.supplyCount[estate]);
+  assert(testG.supplyCount[duchy] == G.supplyCount[duchy]);
+  assert(testG.supplyCount[province] == G.supplyCount[province]);
+  assert(testG.supplyCount[estate] == G.supplyCount[estate]);
+
 
 	printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
 

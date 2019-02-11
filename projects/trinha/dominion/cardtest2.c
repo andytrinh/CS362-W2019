@@ -69,7 +69,7 @@ int main() {
   assert(testG.supplyCount[estate] == G.supplyCount[estate]);
 
 
-  printf("----------------------END OF CARD TEST 2-----------------------\n\n");
+  printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
 
   return 0;
 }
