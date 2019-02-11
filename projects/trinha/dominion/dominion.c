@@ -644,8 +644,8 @@ int getCost(int cardNumber)
 }
 
 int drawAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, int temphand[MAX_HAND], int cardDrawn, int z) {
-      //while(drawntreasure<2){
-      while(drawntreasure<3){
+      while(drawntreasure<2){
+      //while(drawntreasure<3){
       if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
         shuffle(currentPlayer, state);
       }
@@ -669,8 +669,8 @@ int drawAdventurer(int drawntreasure, struct gameState *state, int currentPlayer
 int drawSmithy(int currentPlayer, struct gameState *state, int handPos) {
   //+3 Cards
   int i;
-  //for (i = 0; i < 3; i++)
-  for (i = 1; i < 3; i++)
+  //for (i = 1; i < 3; i++)
+  for (i = 0; i < 3; i++)
   {
     drawCard(currentPlayer, state);
   }
@@ -688,7 +688,7 @@ int drawVillage(int currentPlayer, struct gameState *state, int handPos) {
   //+2 Actions
   //state->numActions = state->numActions + 2;
   state->numActions++;
-  
+
   //discard played card from hand
   discardCard(handPos, currentPlayer, state, 0);
   return 0;
@@ -763,7 +763,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card )
     {
     case adventurer:
-    drawAdventurer(drawntreasure, state, currentPlayer, temphand, cardDrawn, z);
+    return drawAdventurer(drawntreasure, state, currentPlayer, temphand, cardDrawn, z);
 
     case council_room:
       //+4 Cards
@@ -907,10 +907,12 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case smithy:
-      drawSmithy(currentPlayer, state, handPos);
+      return drawSmithy(currentPlayer, state, handPos);
+
 
     case village:
-      drawVillage(currentPlayer, state, handPos);
+      return drawVillage(currentPlayer, state, handPos);
+
 
     case baron:
       state->numBuys++;//Increase buys by 1!
