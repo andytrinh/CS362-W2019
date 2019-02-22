@@ -43,7 +43,7 @@ runtests: randomtestcard1 randomtestcard2 randomtestadventurer
 	./randomtestcard2 >> randomtestcard2.out
 	touch randomtestadventurer.out
 	./randomtestadventurer >> randomtestadventurer.out
-	#gcov dominion.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 	#cat dominion.c.gcov >> unittestresults.out
 	#gcov -b dominion.c >> unittestresults.out
 	#cat dominion.c.gcov >> unittestresults.out
