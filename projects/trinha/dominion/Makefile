@@ -39,11 +39,16 @@ interface.o: interface.h interface.c
 runtests: randomtestcard1 randomtestcard2 randomtestadventurer
 	touch randomtestcard1.out
 	./randomtestcard1 >> randomtestcard1.out
+	gcov dominion.c >> randomtestcard1.out
+	cat dominion.c.gcov >> randomtestcard1.out
+	gcov -b dominion.c >> randomtestcard1.out
+	cat dominion.c.gcov >> randomtestcard1.out
+
 	touch randomtestcard2.out
 	./randomtestcard2 >> randomtestcard2.out
 	touch randomtestadventurer.out
 	./randomtestadventurer >> randomtestadventurer.out
-	gcov dominion.c >> unittestresults.out
+	#gcov dominion.c >> unittestresults.out
 	#cat dominion.c.gcov >> unittestresults.out
 	#gcov -b dominion.c >> unittestresults.out
 	#cat dominion.c.gcov >> unittestresults.out
