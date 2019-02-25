@@ -1,0 +1,125 @@
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+function main called 1 returned 100% blocks executed 97%
+        1:    9:int main() {
+        -:   10:  struct gameState G;
+        1:   11:  int count = 0;
+        -:   12:  int i;
+        1:   13:  int seed = 1000;
+        1:   14:	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
+        -:   15:			sea_hag, tribute, smithy, council_room};
+        1:   16:  int random_num_players = 0;
+        1:   17:  int random_deck_size = 0;
+        1:   18:  int random_hand_size = 0;
+        1:   19:  int failed_draw_treasure = 0;
+        1:   20:  int failed_card_effect = 0;
+        1:   21:  int failed_deck_count = 0;
+        1:   22:  int failed_hand_count = 0;
+        1:   23:  int a = 0;
+        1:   24:  int player = 0; // current player
+        1:   25:  srand(time(NULL));
+call    0 returned 100%
+call    1 returned 100%
+        -:   26:	// initialize a game state and player cards
+        1:   27:  printf("----------------- Random Test #1: Adventurer ----------------- \n");
+call    0 returned 100%
+        -:   28:  int c;
+     1001:   29:  for (c = 0; c < 1000; c++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+        -:   30:    // get random values
+     1000:   31:    random_num_players = (rand() % (MAX_PLAYERS-1) + 2); // randomize number of players 2-4
+call    0 returned 100%
+     1000:   32:    random_deck_size = (rand() % (MAX_DECK-2) + 3); // randomize deck size 3-500
+call    0 returned 100%
+     1000:   33:    random_hand_size = (rand() % (MAX_HAND-4) + 5); // randomize hand size 5-500
+call    0 returned 100%
+     1000:   34:    initializeGame(random_num_players, k, seed, &G);
+call    0 returned 100%
+     1000:   35:    player = (rand() % (random_num_players)); //random current player
+call    0 returned 100%
+        -:   36:
+        -:   37:    // store random values in current player
+     1000:   38:    G.handCount[player] = random_hand_size;
+     1000:   39:    G.whoseTurn = player;
+     1000:   40:    G.deckCount[player] = random_deck_size;
+        -:   41:
+        -:   42:    // test adventurer
+        -:   43:    struct gameState testG;
+     1000:   44:    memcpy(&testG, &G, sizeof(struct gameState));
+        -:   45:
+        -:   46:    // Check for 2+ Treasure cards
+     1000:   47:    a = cardEffect(adventurer, 1, 0, 0, &testG, 0, 0);
+call    0 returned 100%
+        -:   48:    //test to see if cardEffect() failed
+     1000:   49:    if (a < 0) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   50:      failed_card_effect++;
+        -:   51:    }
+        -:   52:
+        -:   53:
+        -:   54:    //test to see if hand count failed
+        -:   55:
+     1000:   56:    if(G.handCount[player] != testG.handCount[player]-5) {
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+       10:   57:      failed_hand_count++;
+        -:   58:    }
+        -:   59:
+        -:   60:    //test to see if deck count failed
+     1000:   61:    if(G.deckCount[player] != testG.deckCount[player]) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+     1000:   62:      failed_deck_count++;
+        -:   63:    }
+        -:   64:
+     1000:   65:    int numTreasure = 0;
+     1000:   66:    int currentCard = 0;
+        -:   67:    int i;
+   249511:   68:    for (i = 0; i < testG.handCount[player]; i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+   248511:   69:      currentCard = testG.hand[player][i];
+   248511:   70:      if(currentCard == copper || currentCard == silver || currentCard == gold)
+branch  0 taken 98% (fallthrough)
+branch  1 taken 2%
+branch  2 taken 100% (fallthrough)
+branch  3 taken 0%
+branch  4 taken 0% (fallthrough)
+branch  5 taken 100%
+     6113:   71:        numTreasure++;
+        -:   72:
+        -:   73:    }
+        -:   74:
+     1000:   75:    if(numTreasure < 2) {
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+        2:   76:      failed_draw_treasure++;
+        -:   77:    }
+        -:   78:  //  printf("%d\n", numTreasure);
+        -:   79://   printf("%d = %d\n", G.handCount[player], testG.handCount[player]);
+        -:   80:  }
+        1:   81:  printf("Treasure count failed: %d times after %d iterations\n", failed_draw_treasure, c);
+call    0 returned 100%
+        1:   82:  printf("Hand count failed: %d times after %d iterations\n", failed_hand_count, c);
+call    0 returned 100%
+        -:   83://  printf("Deck count failed: %d times after %d iterations\n", failed_deck_count, c);
+        1:   84:  printf("cardEffect() failed: %d times after %d iterations\n\n", failed_card_effect, c);
+call    0 returned 100%
+        -:   85:
+        -:   86:
+        1:   87:  return 0;
+        -:   88:
+        -:   89:}

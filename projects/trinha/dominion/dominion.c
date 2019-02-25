@@ -644,8 +644,8 @@ int getCost(int cardNumber)
 }
 
 int drawAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, int temphand[MAX_HAND], int cardDrawn, int z) {
-      //while(drawntreasure<2){
-      while(drawntreasure<3){
+      while(drawntreasure<2){
+    //  while(drawntreasure<3){
       if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
         shuffle(currentPlayer, state);
       }
@@ -688,7 +688,7 @@ int drawVillage(int currentPlayer, struct gameState *state, int handPos) {
   //+2 Actions
   //state->numActions = state->numActions + 2;
   state->numActions++;
-  
+
   //discard played card from hand
   discardCard(handPos, currentPlayer, state, 0);
   return 0;

@@ -39,19 +39,24 @@ interface.o: interface.h interface.c
 runtests: randomtestcard1 randomtestcard2 randomtestadventurer
 	touch randomtestcard1.out
 	./randomtestcard1 >> randomtestcard1.out
-	gcov dominion.c >> randomtestcard1.out
-	cat dominion.c.gcov >> randomtestcard1.out
-	gcov -b dominion.c >> randomtestcard1.out
-	cat dominion.c.gcov >> randomtestcard1.out
+	#gcov randomtestcard1.c >> randomtestcard1.out
+	#gcov -b randomtestcard1.c >> randomtestadventurer.out
+	#gcov -b dominion.c >> randomtestcard1.out
+	#cat dominion.c.gcov >> randomtestcard1.out
 
 	touch randomtestcard2.out
 	./randomtestcard2 >> randomtestcard2.out
+#	gcov randomtestcard2.c >> randomtestcard2.out
+#	gcov -b randomtestcard2.c >> randomtestadventurer.out
+#	gcov -b dominion.c >> randomtestcard2.out
+#	cat dominion.c.gcov >> randomtestcard2.out
+
 	touch randomtestadventurer.out
 	./randomtestadventurer >> randomtestadventurer.out
-	#gcov dominion.c >> unittestresults.out
-	#cat dominion.c.gcov >> unittestresults.out
-	#gcov -b dominion.c >> unittestresults.out
-	#cat dominion.c.gcov >> unittestresults.out
+	gcov randomtestadventurer.c >> randomtestadventurer.out
+	gcov -b randomtestadventurer.c >> randomtestadventurer.out
+	gcov -b dominion.c >> randomtestadventurer.out
+	cat dominion.c.gcov >> randomtestadventurer.out
 
 
 player: player.c interface.o
