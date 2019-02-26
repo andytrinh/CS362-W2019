@@ -1,0 +1,114 @@
+        -:    0:Source:randomtestcard2.c
+        -:    0:Graph:randomtestcard2.gcno
+        -:    0:Data:randomtestcard2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:
+function main called 1 returned 100% blocks executed 83%
+        1:   10:int main() {
+        -:   11:  struct gameState G;
+        1:   12:  int count = 0;
+        -:   13:  int i;
+        1:   14:  int seed = 1000;
+        1:   15:  int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
+        -:   16:      sea_hag, tribute, smithy, council_room};
+        1:   17:  int random_num_players = 0;
+        1:   18:  int random_deck_size = 0;
+        1:   19:  int random_hand_size = 0;
+        1:   20:  int failed_deck_count = 0;
+        1:   21:  int failed_coin_count = 0;
+        1:   22:  int failed_hand_count = 0;
+        1:   23:  int failed_card_effect = 0;
+        1:   24:  int failed_discard_count = 0;
+        1:   25:  int a = 0;
+        1:   26:  int player = 0; // current player
+        1:   27:  srand(time(NULL));
+call    0 returned 100%
+call    1 returned 100%
+        -:   28:  // initialize a game state and player cards
+        1:   29:  printf("----------------- Random Test #3: Steward ----------------- \n");
+call    0 returned 100%
+        -:   30:  int c;
+     1001:   31:  for (c = 0; c < 1000; c++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+        -:   32:    // get random values
+     1000:   33:    random_num_players = (rand() % (MAX_PLAYERS-1) + 2); // randomize number of players 2-4
+call    0 returned 100%
+     1000:   34:    random_deck_size = (rand() % (MAX_DECK-2) + 3); // randomize deck size 3-500
+call    0 returned 100%
+     1000:   35:    random_hand_size = (rand() % (MAX_HAND-4) + 5); // randomize hand size 5-500
+call    0 returned 100%
+     1000:   36:    initializeGame(random_num_players, k, seed, &G);
+call    0 returned 100%
+     1000:   37:    player = (rand() % (random_num_players)); //random current player
+call    0 returned 100%
+        -:   38:    // store random values in current player
+     1000:   39:    G.handCount[player] = random_hand_size;
+     1000:   40:    G.whoseTurn = player;
+     1000:   41:    G.deckCount[player] = random_deck_size;
+        -:   42:
+        -:   43:    struct gameState testG;
+     1000:   44:    memcpy(&testG, &G, sizeof(struct gameState));
+        -:   45:
+        -:   46:    // test steward
+        -:   47:    // Check to see if cardEffect worked
+     1000:   48:    a = cardEffect(steward, 1, 0, 0, &testG, 0, 0);
+call    0 returned 100%
+     1000:   49:    if (a < 0) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   50:      failed_card_effect++;
+        -:   51:    }
+        -:   52:
+        -:   53:    //check to see if two card has been added and one card has been discard
+     1000:   54:    if(G.handCount[player] + 1 != testG.handCount[player]) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   55:      failed_hand_count++;
+        -:   56:    }
+        -:   57:
+        -:   58:    //test to see if 2 coins have been added
+     1000:   59:    a = cardEffect(steward, 2, 0, 0, &testG, 0, 0);
+call    0 returned 100%
+     1000:   60:    if(G.coins + 2 != testG.coins) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   61:      failed_coin_count++;
+        -:   62:    }
+        -:   63:
+     1000:   64:    if(G.deckCount[player] - 2 != testG.deckCount[player]) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   65:      failed_deck_count++;
+        -:   66:    }
+        -:   67:
+        -:   68:
+     1000:   69:    if(G.discardCount[player] != testG.discardCount[player]) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   70:      failed_discard_count++;
+        -:   71:  }
+        -:   72:
+        -:   73:  }
+        1:   74:  printf("Hand count failed: %d times after %d iterations\n", failed_hand_count, c);
+call    0 returned 100%
+        1:   75:  printf("Discarded count failed: %d times after %d iterations\n", failed_discard_count, c);
+call    0 returned 100%
+        1:   76:  printf("Deck count failed: %d times after %d iterations\n", failed_deck_count, c);
+call    0 returned 100%
+        1:   77:  printf("Coin count failed: %d times after %d iterations\n", failed_coin_count, c);
+call    0 returned 100%
+        1:   78:  printf("cardEffect() failed: %d times after %d iterations\n\n", failed_card_effect, c);
+call    0 returned 100%
+        -:   79:
+        1:   80:  return 0;
+        -:   81:}

@@ -52,13 +52,12 @@ int main() {
 
 
     //test to see if hand count failed
-
-    if(G.handCount[player] != testG.handCount[player]-5) {
+    if(G.handCount[player] != testG.handCount[player]-2) {
       failed_hand_count++;
     }
 
     //test to see if deck count failed
-    if(G.deckCount[player] != testG.deckCount[player]) {
+    if(G.deckCount[player] < testG.deckCount[player]) {
       failed_deck_count++;
     }
 
@@ -75,12 +74,10 @@ int main() {
     if(numTreasure < 2) {
       failed_draw_treasure++;
     }
-  //  printf("%d\n", numTreasure);
-//   printf("%d = %d\n", G.handCount[player], testG.handCount[player]);
   }
   printf("Treasure count failed: %d times after %d iterations\n", failed_draw_treasure, c);
   printf("Hand count failed: %d times after %d iterations\n", failed_hand_count, c);
-//  printf("Deck count failed: %d times after %d iterations\n", failed_deck_count, c);
+  printf("Deck count failed: %d times after %d iterations\n", failed_deck_count, c);
   printf("cardEffect() failed: %d times after %d iterations\n\n", failed_card_effect, c);
 
 

@@ -11,7 +11,7 @@
         -:    6:#include "rngs.h"
         -:    7:#include <stdlib.h>
         -:    8:
-function main called 1 returned 100% blocks executed 97%
+function main called 1 returned 100% blocks executed 94%
         1:    9:int main() {
         -:   10:  struct gameState G;
         1:   11:  int count = 0;
@@ -35,35 +35,35 @@ call    1 returned 100%
         1:   27:  printf("----------------- Random Test #1: Adventurer ----------------- \n");
 call    0 returned 100%
         -:   28:  int c;
-     1001:   29:  for (c = 0; c < 1000; c++) {
+    10001:   29:  for (c = 0; c < 10000; c++) {
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
         -:   30:    // get random values
-     1000:   31:    random_num_players = (rand() % (MAX_PLAYERS-1) + 2); // randomize number of players 2-4
+    10000:   31:    random_num_players = (rand() % (MAX_PLAYERS-1) + 2); // randomize number of players 2-4
 call    0 returned 100%
-     1000:   32:    random_deck_size = (rand() % (MAX_DECK-2) + 3); // randomize deck size 3-500
+    10000:   32:    random_deck_size = (rand() % (MAX_DECK-2) + 3); // randomize deck size 3-500
 call    0 returned 100%
-     1000:   33:    random_hand_size = (rand() % (MAX_HAND-4) + 5); // randomize hand size 5-500
+    10000:   33:    random_hand_size = (rand() % (MAX_HAND-4) + 5); // randomize hand size 5-500
 call    0 returned 100%
-     1000:   34:    initializeGame(random_num_players, k, seed, &G);
+    10000:   34:    initializeGame(random_num_players, k, seed, &G);
 call    0 returned 100%
-     1000:   35:    player = (rand() % (random_num_players)); //random current player
+    10000:   35:    player = (rand() % (random_num_players)); //random current player
 call    0 returned 100%
         -:   36:
         -:   37:    // store random values in current player
-     1000:   38:    G.handCount[player] = random_hand_size;
-     1000:   39:    G.whoseTurn = player;
-     1000:   40:    G.deckCount[player] = random_deck_size;
+    10000:   38:    G.handCount[player] = random_hand_size;
+    10000:   39:    G.whoseTurn = player;
+    10000:   40:    G.deckCount[player] = random_deck_size;
         -:   41:
         -:   42:    // test adventurer
         -:   43:    struct gameState testG;
-     1000:   44:    memcpy(&testG, &G, sizeof(struct gameState));
+    10000:   44:    memcpy(&testG, &G, sizeof(struct gameState));
         -:   45:
         -:   46:    // Check for 2+ Treasure cards
-     1000:   47:    a = cardEffect(adventurer, 1, 0, 0, &testG, 0, 0);
+    10000:   47:    a = cardEffect(adventurer, 1, 0, 0, &testG, 0, 0);
 call    0 returned 100%
         -:   48:    //test to see if cardEffect() failed
-     1000:   49:    if (a < 0) {
+    10000:   49:    if (a < 0) {
 branch  0 taken 0% (fallthrough)
 branch  1 taken 100%
     #####:   50:      failed_card_effect++;
@@ -71,55 +71,53 @@ branch  1 taken 100%
         -:   52:
         -:   53:
         -:   54:    //test to see if hand count failed
-        -:   55:
-     1000:   56:    if(G.handCount[player] != testG.handCount[player]-5) {
+    10000:   55:    if(G.handCount[player] != testG.handCount[player]-2) {
 branch  0 taken 1% (fallthrough)
 branch  1 taken 99%
-       10:   57:      failed_hand_count++;
-        -:   58:    }
-        -:   59:
-        -:   60:    //test to see if deck count failed
-     1000:   61:    if(G.deckCount[player] != testG.deckCount[player]) {
-branch  0 taken 100% (fallthrough)
-branch  1 taken 0%
-     1000:   62:      failed_deck_count++;
-        -:   63:    }
-        -:   64:
-     1000:   65:    int numTreasure = 0;
-     1000:   66:    int currentCard = 0;
-        -:   67:    int i;
-   249511:   68:    for (i = 0; i < testG.handCount[player]; i++) {
+       12:   56:      failed_hand_count++;
+        -:   57:    }
+        -:   58:
+        -:   59:    //test to see if deck count failed
+    10000:   60:    if(G.deckCount[player] < testG.deckCount[player]) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   61:      failed_deck_count++;
+        -:   62:    }
+        -:   63:
+    10000:   64:    int numTreasure = 0;
+    10000:   65:    int currentCard = 0;
+        -:   66:    int i;
+  2563172:   67:    for (i = 0; i < testG.handCount[player]; i++) {
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
-   248511:   69:      currentCard = testG.hand[player][i];
-   248511:   70:      if(currentCard == copper || currentCard == silver || currentCard == gold)
-branch  0 taken 98% (fallthrough)
-branch  1 taken 2%
+  2553172:   68:      currentCard = testG.hand[player][i];
+  2553172:   69:      if(currentCard == copper || currentCard == silver || currentCard == gold)
+branch  0 taken 99% (fallthrough)
+branch  1 taken 1%
 branch  2 taken 100% (fallthrough)
 branch  3 taken 0%
 branch  4 taken 0% (fallthrough)
 branch  5 taken 100%
-     6113:   71:        numTreasure++;
-        -:   72:
-        -:   73:    }
-        -:   74:
-     1000:   75:    if(numTreasure < 2) {
+    34644:   70:        numTreasure++;
+        -:   71:
+        -:   72:    }
+        -:   73:
+    10000:   74:    if(numTreasure < 2) {
 branch  0 taken 1% (fallthrough)
 branch  1 taken 99%
-        2:   76:      failed_draw_treasure++;
-        -:   77:    }
-        -:   78:  //  printf("%d\n", numTreasure);
-        -:   79://   printf("%d = %d\n", G.handCount[player], testG.handCount[player]);
-        -:   80:  }
-        1:   81:  printf("Treasure count failed: %d times after %d iterations\n", failed_draw_treasure, c);
+        4:   75:      failed_draw_treasure++;
+        -:   76:    }
+        -:   77:  }
+        1:   78:  printf("Treasure count failed: %d times after %d iterations\n", failed_draw_treasure, c);
 call    0 returned 100%
-        1:   82:  printf("Hand count failed: %d times after %d iterations\n", failed_hand_count, c);
+        1:   79:  printf("Hand count failed: %d times after %d iterations\n", failed_hand_count, c);
 call    0 returned 100%
-        -:   83://  printf("Deck count failed: %d times after %d iterations\n", failed_deck_count, c);
-        1:   84:  printf("cardEffect() failed: %d times after %d iterations\n\n", failed_card_effect, c);
+        1:   80:  printf("Deck count failed: %d times after %d iterations\n", failed_deck_count, c);
 call    0 returned 100%
+        1:   81:  printf("cardEffect() failed: %d times after %d iterations\n\n", failed_card_effect, c);
+call    0 returned 100%
+        -:   82:
+        -:   83:
+        1:   84:  return 0;
         -:   85:
-        -:   86:
-        1:   87:  return 0;
-        -:   88:
-        -:   89:}
+        -:   86:}

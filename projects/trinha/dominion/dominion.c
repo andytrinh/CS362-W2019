@@ -763,7 +763,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card )
     {
     case adventurer:
-    drawAdventurer(drawntreasure, state, currentPlayer, temphand, cardDrawn, z);
+    return drawAdventurer(drawntreasure, state, currentPlayer, temphand, cardDrawn, z);
 
     case council_room:
       //+4 Cards
@@ -907,10 +907,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case smithy:
-      drawSmithy(currentPlayer, state, handPos);
+      return drawSmithy(currentPlayer, state, handPos);
 
     case village:
-      drawVillage(currentPlayer, state, handPos);
+      return drawVillage(currentPlayer, state, handPos);
 
     case baron:
       state->numBuys++;//Increase buys by 1!
