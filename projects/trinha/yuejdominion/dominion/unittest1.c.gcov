@@ -1,0 +1,90 @@
+        -:    0:Source:unittest1.c
+        -:    0:Graph:unittest1.gcno
+        -:    0:Data:unittest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:
+        1:   10:int main() {
+        1:   11:  int newCards = 0;
+        1:   12:  int discarded = 1;
+        1:   13:  int xtraCoins = 0;
+        1:   14:  int shuffledCards = 0;
+        -:   15:
+        -:   16:  int i, j, m;
+        1:   17:  int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+        -:   18:  int remove1, remove2;
+        1:   19:  int seed = 1000;
+        1:   20:  int numPlayers = 2;
+        1:   21:  int thisPlayer = 0;
+        -:   22:  struct gameState G, GG, GGG;
+        1:   23:  int k[10] = {adventurer, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy, council_room};
+        -:   24:
+        -:   25:
+        1:   26:  printf("----------------- Unit Test 1: initalizeGame() ----------------\n");
+        1:   27:  printf("TEST 1: Checking for a game with 2 players\n");
+        1:   28:  printf("-----------------------------------------------------------\n");
+        1:   29:  initializeGame(numPlayers, k, seed, &G);
+        1:   30:  printf("numPlayers = 2, actual = %d\n", G.numPlayers);
+        1:   31:  assert(G.numPlayers == 2);
+        1:   32:  printf("~Checking for number of curse cards~\n");
+        1:   33:  printf("Curse cards: 10, actual: %d\n", G.supplyCount[curse]);
+        1:   34:  assert(G.supplyCount[curse] == 10);
+        1:   35:  printf("~Checking for number of estate cards~\n");
+        1:   36:  printf("Estate cards: 8, actual: %d\n", G.supplyCount[estate]);
+        1:   37:  assert(G.supplyCount[estate] == 8);
+        1:   38:  printf("~Checking for number of duchy cards~\n");
+        1:   39:  printf("Duchy cards: 8, actual: %d\n", G.supplyCount[duchy]);
+        1:   40:  assert(G.supplyCount[duchy] == 8);
+        1:   41:  printf("~Checking for number of province cards~\n");
+        1:   42:  printf("Province cards: 8, actual: %d\n", G.supplyCount[province]);
+        1:   43:  assert(G.supplyCount[province] == 8);
+        1:   44:  printf("-----------------------------------------------------------\n");
+        1:   45:  printf("TEST 2: Checking for a game with 3 players\n");
+        1:   46:  printf("-----------------------------------------------------------\n");
+        1:   47:  initializeGame(3, k, seed, &GG);
+        1:   48:  printf("numPlayers = 3, actual = %d\n", GG.numPlayers);
+        1:   49:  assert(GG.numPlayers == 3);
+        1:   50:  printf("~Checking for number of curse cards~\n");
+        1:   51:  printf("Curse cards: 20, actual: %d\n", GG.supplyCount[curse]);
+        1:   52:  assert(GG.supplyCount[curse] == 20);
+        1:   53:  printf("~Checking for number of estate cards~\n");
+        1:   54:  printf("Estate cards: 12, actual: %d\n", GG.supplyCount[estate]);
+        1:   55:  assert(GG.supplyCount[estate] == 12);
+        1:   56:  printf("~Checking for number of duchy cards~\n");
+        1:   57:  printf("Duchy cards: 12, actual: %d\n", GG.supplyCount[duchy]);
+        1:   58:  assert(GG.supplyCount[duchy] == 12);
+        1:   59:  printf("~Checking for number of province cards~\n");
+        1:   60:  printf("Province cards: 12, actual: %d\n", GG.supplyCount[province]);
+        1:   61:  assert(GG.supplyCount[province] == 12);
+        1:   62:  printf("-----------------------------------------------------------\n");
+        1:   63:  printf("TEST 3: Checking for a game with 4 players\n");
+        1:   64:  printf("-----------------------------------------------------------\n");
+        1:   65:  initializeGame(4, k, seed, &GGG);
+        1:   66:  printf("numPlayers = 4, actual = %d\n", GGG.numPlayers);
+        1:   67:  assert(GGG.numPlayers == 4);
+        1:   68:  printf("~Checking for number of curse cards~\n");
+        1:   69:  printf("Curse cards: 30, actual: %d\n", GGG.supplyCount[curse]);
+        1:   70:  assert(GGG.supplyCount[curse] == 30);
+        1:   71:  printf("~Checking for number of estate cards~\n");
+        1:   72:  printf("Estate cards: 12, actual: %d\n", GGG.supplyCount[estate]);
+        1:   73:  assert(GGG.supplyCount[estate] == 12);
+        1:   74:  printf("~Checking for number of duchy cards~\n");
+        1:   75:  printf("Duchy cards: 12, actual: %d\n", GGG.supplyCount[duchy]);
+        1:   76:  assert(GGG.supplyCount[duchy] == 12);
+        1:   77:  printf("~Checking for number of province cards~\n");
+        1:   78:  printf("Province cards: 12, actual: %d\n", GGG.supplyCount[province]);
+        1:   79:  assert(GGG.supplyCount[province] == 12);
+        -:   80:
+        1:   81:  printf("----------------------END OF UNIT TEST 1-----------------------\n\n");
+        -:   82:
+        -:   83:
+        -:   84:
+        -:   85:}
